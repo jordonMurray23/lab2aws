@@ -1,0 +1,152 @@
+{
+  "runConfigurations": [
+    {
+      "id": "DeliveryChallenge_Cfg03",
+      "name": "Delivery Challenge robot",
+      "type": "colcon build",
+      "cfg": {
+        "workingDir": "./aws-robomaker-sample-application-delivery-challenge/robot_ws",
+        "cmdArgs": ""
+      }
+    },
+    {
+      "id": "DeliveryChallenge_Cfg04",
+      "name": "Delivery Challenge robot",
+      "type": "colcon bundle",
+      "cfg": {
+        "workingDir": "./aws-robomaker-sample-application-delivery-challenge/robot_ws",
+        "cmdArgs": ""
+      }
+    },
+    {
+      "id": "DeliveryChallenge_SimulationJob1",
+      "name": "Delivery Challenge Navigation",
+      "type": "simulation",
+      "cfg": {
+        "simulationApp": {
+          "name": "deliverychallenge_sumulation_user1215037-jmurray12-myseneca-ca",
+          "sourceBundleFile": "./aws-robomaker-sample-application-delivery-challenge/simulation_ws/bundle/output.tar",
+          "architecture": "X86_64",
+          "s3Bucket": "deliverychallengevocstar-robomakerdeliverychallen-1gtkmvt158och",
+          "launchConfig": {
+            "packageName": "delivery_challenge_simulation",
+            "launchFile": "create_stage.launch",
+            "environmentVariables": {
+              "TURTLEBOT3_MODEL": "burger" 
+            }
+          },
+          "simulationSoftwareSuite": {
+            "name": "Gazebo",
+            "version": "9"
+          },
+          "renderingEngine": {
+            "name": "OGRE",
+            "version": "1.x"
+          },
+          "robotSoftwareSuite": {
+            "name": "ROS",
+            "version": "Melodic"
+          }
+        },
+        "robotApp": {
+          "name": "deliverychallenge_robot_user1215037-jmurray12-myseneca-ca",
+          "s3Bucket": "deliverychallengevocstar-robomakerdeliverychallen-1gtkmvt158och",
+          "sourceBundleFile": "./aws-robomaker-sample-application-delivery-challenge/robot_ws/bundle/output.tar",
+          "architecture": "X86_64",
+          "robotSoftwareSuite": {
+            "version": "Melodic",
+            "name": "ROS"
+          },
+          "launchConfig": {
+            "packageName": "delivery_robot_sample",
+            "launchFile": "navigation_simulation.launch",
+            "environmentVariables": {
+            },
+            "streamUI": true
+          }
+        },
+        "simulation": {
+          "maxJobDurationInSeconds": 1800,
+          "failureBehavior": "Fail",
+          "iamRole": "arn:aws:iam::383687608504:role/delivery-challenge-simulation-role-us-east-1",
+          "vpcConfig": {
+            "securityGroups": ["sg-3b10cc3a"],
+            "subnets": ["subnet-40d3b961", "subnet-38dce375", "subnet-6912a158", "subnet-5cbbd303", "subnet-bf1534b1", "subnet-3a432c5c"],
+            "assignPublicIp": true
+          },
+          "tags": {}
+        }
+      }
+    },  
+    {
+      "id": "DeliveryChallenge_SimulationJob2",
+      "name": "Delivery Challenge SLAM",
+      "type": "simulation",
+      "cfg": {
+        "simulationApp": {
+          "name": "deliverychallenge_sumulation_user1215037-jmurray12-myseneca-ca",
+          "sourceBundleFile": "./aws-robomaker-sample-application-delivery-challenge/simulation_ws/bundle/output.tar",
+          "architecture": "X86_64",
+          "s3Bucket": "deliverychallengevocstar-robomakerdeliverychallen-1gtkmvt158och",
+          "launchConfig": {
+            "packageName": "delivery_challenge_simulation",
+            "launchFile": "create_stage0.launch",
+            "environmentVariables": {
+              "TURTLEBOT3_MODEL": "burger" 
+            }
+          },
+          "simulationSoftwareSuite": {
+            "name": "Gazebo",
+            "version": "9"
+          },
+          "renderingEngine": {
+            "name": "OGRE",
+            "version": "1.x"
+          },
+          "robotSoftwareSuite": {
+            "name": "ROS",
+            "version": "Melodic"
+          }
+        },
+        "robotApp": {
+          "name": "deliverychallenge_robot_user1215037-jmurray12-myseneca-ca",
+          "s3Bucket": "deliverychallengevocstar-robomakerdeliverychallen-1gtkmvt158och",
+          "sourceBundleFile": "./aws-robomaker-sample-application-delivery-challenge/robot_ws/bundle/output.tar",
+          "architecture": "X86_64",
+          "robotSoftwareSuite": {
+            "version": "Melodic",
+            "name": "ROS"
+          },
+          "launchConfig": {
+            "packageName": "delivery_robot_sample",
+            "launchFile": "slam_simulation.launch",
+            "environmentVariables": {
+              "TURTLEBOT3_MODEL": "burger" 
+            },
+            "streamUI": true
+          }
+        },
+        "simulation": {
+          "maxJobDurationInSeconds": 5400,
+          "failureBehavior": "Fail",
+          "iamRole": "arn:aws:iam::383687608504:role/delivery-challenge-simulation-role-us-east-1",
+          "vpcConfig": {
+            "securityGroups": ["sg-3b10cc3a"],
+            "subnets": ["subnet-40d3b961", "subnet-38dce375", "subnet-6912a158", "subnet-5cbbd303", "subnet-bf1534b1", "subnet-3a432c5c"],
+            "assignPublicIp": true
+          },
+          "tags": {}
+        }
+      }
+    },
+    {
+      "id": "fc7f3c40-0440-afb2-897a-dc41ee389c3a",
+      "name": "Delivery Challenge Robot app build -> bundle",
+      "type": "workflow",
+      "runCfgIds": [
+        "DeliveryChallenge_Cfg03",
+        "DeliveryChallenge_Cfg04"
+      ]
+    }
+  ]
+}
